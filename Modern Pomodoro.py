@@ -12,7 +12,7 @@ class App:
         self.title_label = ctk.CTkLabel(self.master, text="Pomodoro Timer", font=("Helvetica", 20))
         self.title_label.pack(pady=10)
         
-        self.timer_label = ctk.CTkLabel(self.master, text="1:00", font=("Helvetica", 24))
+        self.timer_label = ctk.CTkLabel(self.master, text="25:00", font=("Helvetica", 24))
         self.timer_label.pack(pady=10)
         
         button_frame = ctk.CTkFrame(self.master)
@@ -38,7 +38,7 @@ class App:
         self.reset_button.grid(row=0,column=2, padx=5,pady=5)
 
         # Initialize variables
-        self.focus_time = 1 * 60  # 25 minutes in seconds
+        self.focus_time = 25 * 60  # 25 minutes in seconds
         self.break_time = 5 * 60   # 5 minutes in seconds
         self.focus_count = 0
         self.tags = []
@@ -94,7 +94,7 @@ class App:
         self.start_button.configure(state=ctk.NORMAL)
         self.stop_button.configure(state=ctk.DISABLED)
         self.reset_button.configure(state=ctk.DISABLED) 
-        self.remaining_time = (1 * 60)
+        self.remaining_time = (25 * 60)
         self.timer_label.configure(text="25:00")      
             
     def get_tag(self):
