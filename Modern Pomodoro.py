@@ -4,19 +4,19 @@ class App:
     def __init__(self, master: ctk.CTk):
         self.master = master
         self.master.minsize(200,0)
-        self.master.geometry('400x200')
+        self.master.geometry('300x100')
         self.master.resizable(True,True)
         self.master.wm_title('Pomodoro Counter')
 
         # Create widgets
-        self.title_label = ctk.CTkLabel(self.master, text="Pomodoro Timer", font=("Helvetica", 20))
-        self.title_label.pack(pady=10)
+        #self.title_label = ctk.CTkLabel(self.master, text="Pomodoro Timer", font=("Helvetica", 20))
+        #self.title_label.pack(pady=10)
         
         self.timer_label = ctk.CTkLabel(self.master, text="25:00", font=("Helvetica", 24))
-        self.timer_label.pack(pady=10)
+        self.timer_label.pack(pady=5)
         
         button_frame = ctk.CTkFrame(self.master)
-        button_frame.pack(pady=10)
+        button_frame.pack(pady=5)
         button_frame.pack_propagate(0)
         
         button_frame.configure(width=300,height=50)
