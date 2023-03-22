@@ -39,8 +39,8 @@ class App:
         self.reset_button.grid(row=0,column=2, padx=5,pady=5)
 
         # Initialize variables
-        self.focus_time = 1 * 10  # 25 minutes in seconds
-        self.break_time = 1 * 10   # 5 minutes in seconds
+        self.focus_time = 25 * 60  # 25 minutes in seconds
+        self.break_time = 5 * 60   # 5 minutes in seconds
         self.focus_count = 0
         self.timer_running = False
         self.timer_paused = False
