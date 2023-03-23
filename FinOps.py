@@ -7,7 +7,7 @@ def get_sku_list(file_path):
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            sku_list.append(row['sku'])
+            sku_list.append(row['name'])
     return sku_list
 
 def read_pricing_data(file_path):
@@ -15,7 +15,7 @@ def read_pricing_data(file_path):
     with open(file_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            key = row['sku']
+            key = row['name']
             pricing_data[key] = {
                 'od': float(row['od']),
                 'savings': float(row['savings']),
@@ -91,40 +91,12 @@ sku2_dropdown.grid(row=3, column=0, padx=(5, 5), pady=(5, 5))
 sku2_amt = ctk.CTkEntry(app_frame, width=20)
 sku2_amt.grid(row=3, column=1, padx=(5, 5), pady=(5, 5))
 
-"""sku3_label = ctk.CTkEntry(app_frame, width=120)
-sku3_label.grid(row=4, column=0, padx=(5, 5), pady=(5, 5))
-
-sku3_amt = ctk.CTkEntry(app_frame, width=20)
-sku3_amt.grid(row=4, column=1, padx=(5, 5), pady=(5, 5))
-
-sku4_label = ctk.CTkEntry(app_frame, width=120)
-sku4_label.grid(row=5, column=0, padx=(5, 5), pady=(5, 5))
-
-sku4_amt = ctk.CTkEntry(app_frame, width=20)
-sku4_amt.grid(row=5, column=1, padx=(5, 5), pady=(5, 5))
-
-sku5_label = ctk.CTkEntry(app_frame, width=120)
-sku5_label.grid(row=6, column=0, padx=(5, 5), pady=(5, 5))
-
-sku5_amt = ctk.CTkEntry(app_frame, width=20)
-sku5_amt.grid(row=6, column=1, padx=(5, 5), pady=(5, 5))
-
-sku6_label = ctk.CTkEntry(app_frame, width=120)
-sku6_label.grid(row=7, column=0, padx=(5, 5), pady=(5, 5))
-
-sku6_amt = ctk.CTkEntry(app_frame, width=20)
-sku6_amt.grid(row=7, column=1, padx=(5, 5), pady=(5, 5))"""
-
 calculate_button = ctk.CTkButton(app_frame, text="Calculate Savings", command=calculate_savings)
 calculate_button.grid(row=8, column=0, columnspan=2, padx=(5, 5), pady=(5, 5))
 
 result_label = ctk.CTkLabel(app_frame, text="")
 result_label.grid(row=9, column=0, columnspan=2, padx=(5, 5), pady=(5, 5))
 
-
 option_menus = [sku1_dropdown, sku2_dropdown]
 
 root.mainloop()
-
-#add read_pricing_csv button made
-#read the data 
