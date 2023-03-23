@@ -3,11 +3,13 @@ import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk
 
+# Updates the number of instances for the specified SKU
 def update_sku_instances(sku_name, instances):
     for sku in skus:
         if sku['name'] == sku_name:
             sku['instances'] = int(instances)
 
+# Calculates costs and displays the results in the result_label
 def calculate_and_display():
     selected_sku1 = sku1_dropdown.get()
     selected_sku2 = sku2_dropdown.get()
@@ -20,8 +22,6 @@ def calculate_and_display():
 
     results = calculate_spend(skus, entered_csp_commit)
 
-
-    # Display results in the result_label
     result_label.config(text='Total on-demand cost: ${:.2f}\n'.format(results[5]) +
                             'Total discounted cost: ${:.2f}\n'.format(results[6]) +
                             'Blended savings rate: {:.2%}\n\n'.format(results[9]) +
@@ -32,6 +32,7 @@ def calculate_and_display():
                             'On-demand instances: {:.2f}'.format(results[2][selected_sku2]) +
                             ', Discounted instances: {:.2f}'.format(results[1][selected_sku2]))    
 
+# Read SKU data from a CSV file and returns a list of SKU dictionaries
 def get_skus(file_path):
     skus = []
     with open(file_path, newline='') as csvfile:
@@ -48,6 +49,7 @@ def get_skus(file_path):
 csv_file_path = 'aws.csv'
 skus = get_skus(csv_file_path)
 
+# Load pricing data from the specified CSV file and update the UI with the new data
 def load_csv_data():
     file_path = csv_input.get()
     global pricing_data, skus
@@ -61,23 +63,7 @@ def load_csv_data():
         for skus in skus:
             option_menu["menu"].add_command(label=skus, command=tk._setit(var, skus))
 
-""""        
-def read_skus_from_csv(file_path):
-    skus = []
-
-    with open(file_path, mode='r') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            sku = {
-                'name': row['name'],
-                'od': float(row['od']),
-                'savingspct': float(row['savingspct']),
-                'instances': float(row['instances'])
-            }
-            skus.append(sku)
-    return skus"""
-
-
+# Calculate the spend based on the provided SKUs and Compute Savings Plan commitment
 def calculate_spend(skus, csp_commit):
     skus.sort(key=lambda x: x['savingspct'], reverse=True)
 
@@ -157,8 +143,20 @@ csp_commit_label.grid(row=3, column=0, pady=5)
 csp_commit_entry = ctk.CTkEntry(main_frame, width=75)
 csp_commit_entry.grid(row=3, column=1)
 
+# Enable or disable the calculate button based on the input fields
+def toggle_calculate_button():
+    if sku1_entry.get() and sku2_entry.get() and csp_commit_entry.get():
+        calculate_button.configure(state=tk.NORMAL)
+    else:
+        calculate_button.configure(state=tk.DISABLED)
+
+# Bind the input fields to call toggle_calculate_button function on modification
+sku1_entry.bind('<KeyRelease>', lambda event: toggle_calculate_button())
+sku2_entry.bind('<KeyRelease>', lambda event: toggle_calculate_button())
+csp_commit_entry.bind('<KeyRelease>', lambda event: toggle_calculate_button())
+
 # Add the calculate button
-calculate_button = ctk.CTkButton(main_frame, text="Calculate", command=calculate_and_display)
+calculate_button = ctk.CTkButton(main_frame, text="Calculate", command=calculate_and_display, state=tk.DISABLED)  # Set initial state to DISABLED
 calculate_button.grid(row=4, column=0, columnspan=2, pady=10)
 
 # Add the result label

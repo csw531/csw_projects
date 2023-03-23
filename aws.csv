@@ -7,4 +7,3 @@ Fargate vCPU |  | us-west-1,Fargate vCPU,,us-west-1,0.04,0,0.25,0,0,0
 m5.24xlarge |  | us-west-1,m5.24xlarge,,us-west-1,10,8.2,0.18,7.8,0.22,0
 Lambda duration (per GB/sec) |  | us-east-2,Lambda duration (per GB/sec),,us-east-2,0.000015,0,0.15,0,0,0
 Lambda requests (per 1M requests) |  | us-east-2,Lambda requests (per 1M requests),,us-east-2,0.2,0.2,0,0.2,0,0
-test,,,,,,,,,
