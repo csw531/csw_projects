@@ -5,7 +5,7 @@ class App:
     def __init__(self, master: ctk.CTk):
         self.master = master
         self.master.minsize(200,0)
-        self.master.geometry('300x100')
+        self.master.geometry('300x150')
         self.master.resizable(True,True)
         self.master.wm_title('Pomodoro Counter')
 
