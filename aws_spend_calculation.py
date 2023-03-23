@@ -1,7 +1,7 @@
 import csv
 import customtkinter as ctk
 import tkinter as tk
-
+       
 def read_skus_from_csv(file_path):
     skus = []
 
@@ -15,8 +15,8 @@ def read_skus_from_csv(file_path):
                 'instances': float(row['instances'])
             }
             skus.append(sku)
-
     return skus
+
 
 def calculate_spend(skus, csp_commit):
     skus.sort(key=lambda x: x['savingspct'], reverse=True)
@@ -71,13 +71,13 @@ file_path = 'aws.csv'
 skus = read_skus_from_csv(file_path)
 
 # Define the csp_commit
-csp_commit = 19.6
+csp_commit = 1
 
 # Call the calculate_spend function
 total_spend, discounted_instances, od_instances, od_cost_per_sku, discounted_cost_per_sku, total_od_cost, total_discounted_cost, total_combined_cost, total_od_cost_no_csp, blended_savings_rate = calculate_spend(skus, csp_commit)
 
 # Print the results
-"""print(f'Total spend: ${total_spend:.2f}/hr')
+print(f'Total spend: ${total_spend:.2f}/hr')
 print(f'Discounted instances: {discounted_instances}')
 print(f'OD instances: {od_instances}')
 print(f'Discounted cost per SKU: {discounted_cost_per_sku}')
@@ -86,49 +86,5 @@ print(f'Total OD cost: ${total_od_cost:.2f}')
 print(f'Total discounted cost: ${total_discounted_cost:.2f}')
 print(f'Total combined cost: ${total_combined_cost:.2f}')
 print(f'Total OD cost without CSP: ${total_od_cost_no_csp:.2f}')
-print(f'Blended savings rate: {blended_savings_rate:.2%}')"""
-
-# Create the main window
-root = tk.Tk()
-root.title("AWS Savings Calculator")
-
-# Create title label
-title_label = tk.Label(root, text="AWS Savings Calculation", font=("Arial", 16))
-title_label.grid(row=0, column=0, columnspan=4, pady=10)
-
-
-# Create SKU selection dropdowns
-sku_variable1 = tk.StringVar(root)
-sku_variable2 = tk.StringVar(root)
-dropdown1 = tk.Combobox(root, textvariable=sku_variable1, values=[sku['name'] for sku in skus], state="readonly")
-dropdown2 = tk.Combobox(root, textvariable=sku_variable2, values=[sku['name'] for sku in skus], state="readonly")
-dropdown1.grid(row=1, column=0, padx=10, pady=10)
-dropdown2.grid(row=2, column=0, padx=10, pady=10)
-
-# Display od rate and savingspct
-od_label1 = ctk.CTkLabel(root, text="OD: ")
-od_label2 = ctk.CTkLabel(root, text="OD: ")
-savingspct_label1 = ctk.CTkLabel(root, text="SavingsPct: ")
-savingspct_label2 = ctk.CTkLabel(root, text="SavingsPct: ")
-
-od_label1.grid(row=1, column=1, padx=5)
-od_label2.grid(row=2, column=1, padx=5)
-savingspct_label1.grid(row=1, column=2, padx=5)
-savingspct_label2.grid(row=2, column=2, padx=5)
-
-# Create instance inputs
-instance_entry1 = ctk.CTkEntry(root)
-instance_entry2 = ctk.CTkEntry(root)
-instance_entry1.grid(row=1, column=3, padx=10, pady=10)
-instance_entry2.grid(row=2, column=3, padx=10, pady=10)
-
-# Create CSP_Commit input
-csp_commit_label = ctk.CTkLabel(root, text="CSP_Commit:")
-csp_commit_entry = ctk.CTkEntry(root)
-csp_commit_label.grid(row=3, column=0, padx=5, pady=10)
-csp_commit_entry.grid(row=3, column=1, padx=10, pady=10)
-
-
-root.mainloop()
-
+print(f'Blended savings rate: {blended_savings_rate:.2%}')
 
