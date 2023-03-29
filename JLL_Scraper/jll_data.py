@@ -34,9 +34,15 @@ def download_city_report(city):
     sleep_time = random.randint(1, 5)
     url = "https://www.us.jll.com/en/trends-and-insights/research/industrial-market-statistics-trends/{}".format(city)
     print(url)
-    # Webdriver path
-    webdriver_path = "C:\\Users\\clays\\Documents\\GitHub\\Data_Collection\\chromedriver.exe"
-    download_folder = "C:\\Users\\clays\\Downloads"
+    # Get the current script directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    # Set the webdriver path as a relative path
+    webdriver_path = os.path.join(script_dir, 'chromedriver.exe')
+    # Set the download folder path as a relative path
+    download_folder = os.path.join(script_dir, 'Downloads')
+    # Create the download folder if it doesn't exist
+    if not os.path.exists(download_folder):
+        os.makedirs(download_folder)
 
     # Create ChromeOptions instance
     options = webdriver.ChromeOptions()
@@ -128,7 +134,9 @@ def reset_script():
 def main_function():
     # Read the CSV file containing the city names and store them in a list
     # ... (rest of the code)
-    city_file = "jll_cities.csv"
+    # Get the current script directory
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    city_file = os.path.join(script_dir, 'jll_cities.csv')
 
     # Read the list of cities from the csv file
     with open(city_file, "r") as csvfile:
@@ -136,7 +144,7 @@ def main_function():
         cities = [row[0] for row in csv_reader]
 
     # Read the last processed city and find the index of that city in the cities list
-    last_processed_city_file = "path_to_last_processed_city_file.txt"
+    last_processed_city_file = os.path.join(script_dir, 'last_processed_city.txt')
     last_processed_city = read_last_processed_city(last_processed_city_file)
 
     if last_processed_city and last_processed_city in cities:
