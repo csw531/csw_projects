@@ -3,6 +3,7 @@ import csv
 import random
 import time
 import pyautogui
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
 from threading import Thread
@@ -165,14 +166,12 @@ def main_function():
 
 # Create the main application window
 root = tk.Tk()
-root.title("Data Retriever for [insert URL]")
-root.geometry("400x200")
+root.title("JLL Data Retriever")
+root.geometry("200x100")
 
 # Create and pack the widgets (buttons)
-start_button = tk.Button(root, text="Script Start", command=start_script)
-reset_button = tk.Button(root, text="Reset", command=reset_script)
+start_button = ctk.CTkButton(root, text="Start Script", command=start_script)
 start_button.pack(pady=20)
-reset_button.pack(pady=20)
 
 # Create a separate thread for running the script
 script_thread = Thread(target=main_function)
