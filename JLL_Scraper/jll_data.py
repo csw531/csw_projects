@@ -142,8 +142,14 @@ def reset_script():
 def main_function():
     # Read the CSV file containing the city names and store them in a list
     # ... (rest of the code)
+    # Get the directory of the current script or .exe file
+    if getattr(sys, 'frozen', False):
+        # Running as an executable
+        script_dir = os.path.dirname(sys.executable)
+    else:
+        # Running as a script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
     # Get the current script directory
-    script_dir = os.path.dirname(os.path.abspath(__file__))
     city_file = os.path.join(script_dir, 'jll_cities.csv')
 
     # Read the list of cities from the csv file
