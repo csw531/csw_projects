@@ -148,6 +148,12 @@ def reset_script():
         #update_last_processed_city(last_processed_city_file, '')
         messagebox.showinfo("Success", "The script has been reset.")
 
+def on_closing():
+    # Perform any necessary cleanup here, such as closing open files or database connections
+
+    # Destroy the window and stop the script
+    root.destroy()
+
 def main_function():
     # Read the CSV file containing the city names and store them in a list
     # ... (rest of the code)
@@ -190,6 +196,7 @@ def main_function():
 root = tk.Tk()
 root.title("JLL Data Retriever")
 root.geometry("225x275")
+root.protocol("WM_DELETE_WINDOW", on_closing)
 
 # Create and configure the main frame
 main_frame = ttk.Frame(root, padding="10")
