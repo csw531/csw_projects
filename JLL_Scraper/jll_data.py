@@ -5,7 +5,10 @@ import random
 import time
 import pyautogui
 import tkinter as tk
+import customtkinter as ctk
 from tkinter import messagebox
+from tkinter import ttk
+from functools import partial
 from threading import Thread
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -57,7 +60,7 @@ def download_city_report(city):
 
     # Add preferences to the ChromeOptions instance
     options.add_experimental_option('prefs', {
-        "download.default_directory": "C:\\Users\\clays\\Downloads\\Cameron_RE_Docs\\jll_report.pdf",
+        "download.default_directory": download_folder,
         "download.prompt_for_download": False,
         "download.directory_upgrade": True,
         "plugins.always_open_pdf_externally": True
@@ -82,28 +85,28 @@ def download_city_report(city):
     first_name_field = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, "firstName"))
     )
-    first_name_field.send_keys("Carl")
+    first_name_field.send_keys(first_name_entry.get())
 
     time.sleep(sleep_time)
 
     last_name_field = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, "lastName"))
     )
-    last_name_field.send_keys("Richardson")
+    last_name_field.send_keys(last_name_entry.get())
 
     time.sleep(sleep_time)
 
     email_address_field = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, "emailAddress"))
     )
-    email_address_field.send_keys("Carl.Richardson@mail.com")
+    email_address_field.send_keys(email_address_entry.get())
 
     time.sleep(sleep_time)
 
     company_field = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.NAME, "companyName1"))
     )
-    company_field.send_keys("RE Developers")
+    company_field.send_keys(company_entry.get())
 
     time.sleep(sleep_time)
 
@@ -123,6 +126,12 @@ def download_city_report(city):
     download_button.click()
 
     time.sleep(5)
+
+def check_entries(*args):
+    if all([first_name_var.get(), last_name_var.get(), email_address_var.get(), company_var.get()]):
+        start_button.configure(state=tk.NORMAL)
+    else:
+        start_button.configure(state=tk.DISABLED)
 
 # Function to start the script
 def start_script():
@@ -180,20 +189,54 @@ def main_function():
 # Create the main application window
 root = tk.Tk()
 root.title("JLL Data Retriever")
-root.geometry("200x100")
+root.geometry("225x275")
+
+# Create and configure the main frame
+main_frame = ttk.Frame(root, padding="10")
+main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
+
+# Add title label
+title_label = ttk.Label(main_frame, text="JLL Data Retriever", font=("Arial", 16))
+title_label.grid(row=0, column=0, columnspan=3, pady=10)
+
+# Inputs
+first_name_label = ttk.Label(main_frame, text="First Name:")
+first_name_label.grid(row=1, column=0, pady=5)
+first_name_var = tk.StringVar()
+first_name_entry = ctk.CTkEntry(main_frame, width=100, textvariable=first_name_var)
+first_name_entry.grid(row=1, column=1, padx=(5, 5), pady=(5, 5))
+
+last_name_label = ttk.Label(main_frame, text="Last Name:")
+last_name_label.grid(row=2, column=0, pady=5)
+last_name_var = tk.StringVar()
+last_name_entry = ctk.CTkEntry(main_frame, width=100, textvariable=last_name_var)
+last_name_entry.grid(row=2, column=1, padx=(5, 5), pady=(5, 5))
+
+email_address_label = ttk.Label(main_frame, text="Email Address:")
+email_address_label.grid(row=4, column=0, pady=5)
+email_address_var = tk.StringVar()
+email_address_entry = ctk.CTkEntry(main_frame, width=100, textvariable=email_address_var)
+email_address_entry.grid(row=4, column=1, padx=(5, 5), pady=(5, 5))
+
+company_entry_label = ttk.Label(main_frame, text="Company Name:")
+company_entry_label.grid(row=5, column=0, pady=5)
+company_var = tk.StringVar()
+company_entry = ctk.CTkEntry(main_frame, width=100, textvariable=company_var)
+company_entry.grid(row=5, column=1, padx=(5, 5), pady=(5, 5))
+
+
+# Add trace on entry field variables
+first_name_var.trace_add("write", check_entries)
+last_name_var.trace_add("write", check_entries)
+email_address_var.trace_add("write", check_entries)
+company_var.trace_add("write", check_entries)
 
 # Create and pack the widgets (buttons)
-start_button = tk.Button(root, text="Start Script", command=start_script)
-start_button.pack(pady=20)
+start_button = ctk.CTkButton(root, text="Start Script", command=start_script, state=tk.DISABLED)
+start_button.grid(row=6, column=0, padx=(5, 5), pady=(5, 5))
 
 # Create a separate thread for running the script
 script_thread = Thread(target=main_function)
 
 # Start the main event loop
 root.mainloop()
-
-
-        
-
-
-
