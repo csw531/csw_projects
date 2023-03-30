@@ -148,11 +148,7 @@ def reset_script():
         #update_last_processed_city(last_processed_city_file, '')
         messagebox.showinfo("Success", "The script has been reset.")
 
-def on_closing():
-    # Perform any necessary cleanup here, such as closing open files or database connections
 
-    # Destroy the window and stop the script
-    root.destroy()
 
 def main_function():
     # Read the CSV file containing the city names and store them in a list
@@ -191,6 +187,12 @@ def main_function():
         except Exception as e:
             print(f"Error downloading report for {city}: {e}")
             continue
+
+def on_closing():
+    # Perform any necessary cleanup here, such as closing open files or database connections
+
+    # Destroy the window and stop the script
+    root.destroy()
 
 # Create the main application window
 root = tk.Tk()
@@ -246,6 +248,14 @@ start_button.grid(row=6, column=0, padx=(5, 5), pady=(5, 5))
 script_thread = Thread(target=main_function)
 
 # Start the main event loop
-root.mainloop()
+try:
+    root.mainloop()
+except KeyboardInterrupt:
+    # Handle the KeyboardInterrupt (Ctrl+C) event
+    pass
+finally:
+    # Perform any necessary cleanup here, such as closing open files or database connections
+    root.destroy()
+    sys.exit(0)
 
 
