@@ -1,9 +1,9 @@
 import os
 import csv
+import sys
 import random
 import time
 import pyautogui
-import customtkinter as ctk
 import tkinter as tk
 from tkinter import messagebox
 from threading import Thread
@@ -35,8 +35,15 @@ def download_city_report(city):
     sleep_time = random.randint(1, 5)
     url = "https://www.us.jll.com/en/trends-and-insights/research/industrial-market-statistics-trends/{}".format(city)
     print(url)
-    # Get the current script directory
-    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Get the directory of the current script or .exe file
+    if getattr(sys, 'frozen', False):
+        # Running as an executable
+        script_dir = os.path.dirname(sys.executable)
+    else:
+        # Running as a script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+    
     # Set the webdriver path as a relative path
     webdriver_path = os.path.join(script_dir, 'chromedriver.exe')
     # Set the download folder path as a relative path
@@ -170,7 +177,7 @@ root.title("JLL Data Retriever")
 root.geometry("200x100")
 
 # Create and pack the widgets (buttons)
-start_button = ctk.CTkButton(root, text="Start Script", command=start_script)
+start_button = tk.Button(root, text="Start Script", command=start_script)
 start_button.pack(pady=20)
 
 # Create a separate thread for running the script
