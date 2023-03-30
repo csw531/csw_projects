@@ -240,3 +240,5 @@ script_thread = Thread(target=main_function)
 
 # Start the main event loop
 root.mainloop()
+input("Press any key to exit...")
+
