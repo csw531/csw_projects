@@ -226,10 +226,10 @@ company_entry.grid(row=5, column=1, padx=(5, 5), pady=(5, 5))
 
 
 # Add trace on entry field variables
-first_name_var.trace_add("write", check_entries)
-last_name_var.trace_add("write", check_entries)
-email_address_var.trace_add("write", check_entries)
-company_var.trace_add("write", check_entries)
+first_name_var.trace("w", check_entries)
+last_name_var.trace("w", check_entries)
+email_address_var.trace("w", check_entries)
+company_var.trace("w", check_entries)
 
 # Create and pack the widgets (buttons)
 start_button = ctk.CTkButton(root, text="Start Script", command=start_script, state=tk.DISABLED)
